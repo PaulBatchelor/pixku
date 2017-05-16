@@ -4,6 +4,8 @@
 #include <cray.h>
 #include <img.h>
 
+#include "pixku.h"
+
 runt_int runt_load_img(runt_vm *vm);
 runt_int runt_load_cray(runt_vm *vm);
 
@@ -212,7 +214,7 @@ static int rproc_loadcray(runt_vm *vm, runt_ptr p)
     return RUNT_OK;
 }
 
-static int loader(runt_vm *vm)
+int pixku_runt_loader(runt_vm *vm)
 {
     runt_load_stdlib(vm);
 
@@ -221,7 +223,3 @@ static int loader(runt_vm *vm)
     return RUNT_OK;
 }
 
-int main(int argc, char *argv[])
-{
-    return irunt_begin(argc, argv, loader);
-}

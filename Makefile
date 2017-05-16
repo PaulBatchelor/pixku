@@ -1,4 +1,4 @@
-OBJ=pixku.o
+OBJ=pixku.o 
 
 CFLAGS=-I$(HOME)/.runt/include 
 LDFLAGS= -L$(HOME)/.runt/lib/ -lrunt -ldl -lrunt_img -lGL -lrunt_cray -lm
@@ -9,7 +9,7 @@ default: pixku
 	$(CC) $(CFLAGS) $< -c -o $@
 
 pixku: pixku.c
-	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) main.c $< -o $@ $(LDFLAGS)
 
 clean: 
 	rm -rf pixku $(OBJ)
