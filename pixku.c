@@ -8,6 +8,7 @@
 
 runt_int runt_load_img(runt_vm *vm);
 runt_int runt_load_cray(runt_vm *vm);
+runt_int runt_load_cairo(runt_vm *vm);
 
 static void bgcolor(cray_scene *scene, cray_ray *ray, int x, int y, CRAYFLT *color)
 {
@@ -202,6 +203,13 @@ static int rproc_loadimg(runt_vm *vm, runt_ptr p)
     return RUNT_OK;
 }
 
+static int rproc_loadcairo(runt_vm *vm, runt_ptr p)
+{
+    runt_load_cairo(vm);
+    runt_mark_set(vm);
+    return RUNT_OK;
+}
+
 static int rproc_loadcray(runt_vm *vm, runt_ptr p)
 {
     runt_load_cray(vm);
@@ -220,6 +228,7 @@ int pixku_runt_loader(runt_vm *vm)
 
     runt_word_define(vm, "pix_img", 7, rproc_loadimg);
     runt_word_define(vm, "pix_cray", 8, rproc_loadcray);
+    runt_word_define(vm, "pix_cairo", 9, rproc_loadcairo);
     return RUNT_OK;
 }
 
