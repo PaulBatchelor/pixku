@@ -1,0 +1,59 @@
+pix_img
+pix_cray
+[
+: camera 
+0.4 cam_aperture
+0 0 5 cam_lookfrom
+0 0 -1 cam_lookat
+0 1 0 cam_vup
+20 vfov
+
+aspect cam_aspect
+cam_dist cam_focus_dist
+cam_update
+;
+
+: red 128 0 0 img_color ;
+: burntred 128 0 0 img_color ;
+: mustard 128 128 0 img_color ;
+: cyan 0 200 149 img_color ;
+: grey 255 255 0 img_color ;
+
+: rblock 32 rnd 32 rnd img_blk ;
+: rline 32 96 rnd 2 * 32 + dup 112 2 * swap img_line ;
+: rglyph 24 rnd 4 +  24 rnd 4 + 0.3 pix_glyph ;
+: rrender 24 rnd 4 +  24 rnd 4 + pix_blk ;
+]
+
+
+256 256 1 4 cray_init
+
+red  img_fill
+
+# mustard 100 _rblock rep
+
+mustard 40 _rline rep
+
+camera
+
+0 0 -1 0.5 0.9 0.9 0.0 lambertian add_sphere
+0 -100.5 -1 100 0.8 0.8 0.0 lambertian add_sphere
+
+pix_shadow
+
+# pix_bgcolor
+
+1 cray_maxdepth
+
+cyan 200 _rglyph rep
+
+50 cray_sampling
+cray_shadow
+
+pix_bgcolor
+
+400 _rrender rep
+
+# 0 0 256 256 pix_render
+
+"blood.png" img_write

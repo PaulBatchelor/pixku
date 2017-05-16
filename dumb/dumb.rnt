@@ -1,0 +1,108 @@
+pix_img
+pix_cray
+[
+: blk
+-1 peak -3 peak swap pix_blk
+-1 peak 1 + -3 peak swap pix_blk
+-1 peak -3 peak 1 + swap pix_blk
+-1 peak 1 + -3 peak 1 + swap pix_blk 2 drops 
+;
+
+: blk2
+-1 peak -3 peak swap blk
+-1 peak 2 + -3 peak swap blk
+-1 peak 2 + -3 peak 2 + swap blk
+-1 peak -3 peak 2 + swap blk 2 drops
+;
+
+: bar 
+-2 peak 8 * 
+-2 peak 8 * 
+8 
+8 8 * img_rect
+swap dec dec swap
+;
+
+: longbar
+-2 peak 
+-2 peak
+8 * 240 32 img_rect
+# 8 * 240 32 pix_render
+;
+
+: renderbar
+8 * 240 32 pix_render
+;
+
+: burntred 255 128 128 img_color ;
+
+: darkgreen 128 255 128 img_color ;
+
+: yellow 255 255 128 img_color ;
+
+: cyan 128 255 255 img_color ;
+
+: colors burntred darkgreen yellow cyan ;
+
+: cblock
+_colors dup psize rnd + ex
+30 rnd 1 + 30 rnd 1 + img_blk
+;
+
+: rblock 
+30 rnd 1 + 30 rnd 1 + 0.35 pix_glyph
+;
+]
+
+255 255 255 img_color
+img_fill
+
+256 256 2 4 cray_init
+pix_shadow
+
+0 0 -1 0.5 0.8 0.8 0.0 lambertian add_sphere
+1 0 -1 0.5 1.0 1.0 1.0 1.9 dielectric add_sphere
+-1 0 -1 0.5 0.3 0.3 0.8 0.1 metallic add_sphere
+
+0 -100.5 -1 100 0.8 0.8 0.8 lambertian add_sphere
+
+0.4 cam_aperture
+3 3 3 cam_lookfrom
+0 0 -1 cam_lookat
+0 1 0 cam_vup
+30 vfov
+
+aspect cam_aspect
+cam_dist cam_focus_dist
+cam_update
+
+
+1 cray_sampling
+
+150 _cblock rep
+
+8 8 240 240 pix_render
+
+255 0 128 img_color
+
+100 _rblock rep
+
+100 cray_sampling 
+255 255 255 img_color
+8 8 img_blk
+8 8 pix_blk
+
+
+255 255 255 img_color
+8 18 longbar
+8 18 renderbar
+
+255 255 255 img_color
+8 8 longbar
+250 0 0 img_color
+28 6 8 _bar rep 4 drops
+
+8 8 renderbar
+
+
+"dumb.png" img_write
