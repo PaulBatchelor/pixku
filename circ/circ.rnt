@@ -1,0 +1,57 @@
+pix_cairo
+pix_plumber
+[
+: frame 0 ;
+: cr ptr ;
+: surface ptr ;
+: pd ptr ;
+: stream ptr ;
+
+: scale 1 ;
+
+: rgbizer
+255 / 
+rot 255 /
+rot 255 /
+rot
+;
+
+: draw 
+1 1 1 0.2 cr cairo_set_source_rgba
+cr cairo_paint
+
+159 181 190 rgbizer cr cairo_set_source_rgb
+
+320 180 30 70 scale * + 0 2 cr cairo_arc
+cr cairo_fill
+frame p
+frame cairo_frame surface cairo_surface_write_to_png
+frame inc _frame set
+;
+
+
+: clean 
+surface cr cairo_free
+stream pd plumbstream_free
+pd plumb_free
+;
+
+
+]
+
+640 360 cairo_image_surface_create _surface setptr
+surface cairo_create _cr setptr 
+1 1 1 cr cairo_set_source_rgb
+cr cairo_paint
+
+44100 plumb_new _pd setptr pd plumbstream_new _stream setptr
+_scale "s" stream pd plumb_var
+_draw "draw" stream pd plumb_func
+
+"0.2 1 sine 0.1 1 biscale 1 sine 0 1 biscale _s set" stream pd plumb_parse
+"_s get 300 600 scale 0.5 saw 1000 0.3 moogladder" stream pd plumb_parse
+"30 metro _draw fe" stream pd plumb_parse
+
+"out.wav" 10 stream pd plumb_write
+
+clean
