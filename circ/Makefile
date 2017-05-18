@@ -4,11 +4,12 @@ PIXKU=../pixku
 FFMPEG_OPTIONS=-i tmp.wav -framerate 30 
 FFMPEG_OPTIONS+=-i %04d.png -c:v libx264 -c:a aac -y -strict -2
 
-DEFAULT=circ_rot
 
 render: 
-	$(PIXKU) $(DEFAULT).rnt
-	make $(DEFAULT).mp4
+	$(PIXKU) circ_rot.rnt
+	make circ_rot.mp4
+	$(PIXKU) circ.rnt
+	make circ.mp4
 
 %.mp4: 
 	sox out.wav -c 2 tmp.wav
