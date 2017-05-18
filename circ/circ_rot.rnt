@@ -1,0 +1,76 @@
+pix_cairo
+pix_plumber
+[
+: frame 0 ;
+: cr ptr ;
+: surface ptr ;
+: pd ptr ;
+: stream ptr ;
+
+: scale 1 ;
+
+: posX 1 ;
+: posY 0 ;
+
+: rgbizer
+255 / 
+rot 255 /
+rot 255 /
+rot
+;
+
+: draw 
+1 1 1 0.2 cr cairo_set_source_rgba
+cr cairo_paint
+
+159 181 190 rgbizer cr cairo_set_source_rgb
+
+60 520 posX * + 
+60 240 posY * +
+20 30 scale * + 0 2 cr cairo_arc
+cr cairo_fill
+frame p
+frame cairo_frame surface cairo_surface_write_to_png
+frame inc _frame set
+;
+
+
+: clean 
+surface cr cairo_free
+stream pd plumbstream_free
+pd plumb_free
+;
+
+: null ;
+
+: data stream pd ;
+
+]
+
+640 360 cairo_image_surface_create _surface setptr
+surface cairo_create _cr setptr 
+1 1 1 cr cairo_set_source_rgb
+cr cairo_paint
+
+44100 plumb_new _pd setptr pd plumbstream_new _stream setptr
+_scale "s" data plumb_var
+_posX "posX" data plumb_var
+_posY "posY" data plumb_var
+_draw "draw" data plumb_func
+
+"_sine 8192 gen_sine" data plumb_parse
+
+"0.3 1 0 _sine osc 0 1 biscale _posX set" data plumb_parse
+"0.3 1 0.25 _sine osc 0 1 biscale _posY set" data plumb_parse
+"1 1 0 _sine osc 0 1 biscale _s set" data plumb_parse
+# "0.2 1 sine 0.1 1 biscale 1 sine 0 1 biscale _s set" data plumb_parse
+"_posX get 300 600 scale _s get 0.1 0.5 scale saw" data plumb_parse
+"_posY get 500 2000 scale 0.1 moogladder" data plumb_parse
+"dup dup 0.94 8000 revsc drop -10 ampdb _posY get * * + " data plumb_parse
+"30 metro _draw fe" data plumb_parse
+
+"out.wav" 10 data plumb_write
+
+# draw
+
+clean
