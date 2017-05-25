@@ -2,9 +2,13 @@ pix_img_cairo
 pix_plumber
 
 "common" load
-[ : gate 0 ; ]
+[ 
+: gate 0 ; 
+: name "Babble" _title setptr ;
+]
 
 setup
+name
 add_drawfun
 # runthrough
 
@@ -39,4 +43,6 @@ _gate "gate" data plumb_var
 
 "30 metro _draw fe" parse
 "_voc fc" parse
+
+draw
 render

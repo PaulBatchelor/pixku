@@ -4,8 +4,12 @@ pix_img_cairo
 pix_plumber
 
 "common" load
+[
+: name "Unya" _title setptr ;
+]
 
 setup
+name
 add_drawfun
 # runthrough
 

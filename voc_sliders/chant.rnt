@@ -2,8 +2,12 @@ pix_img_cairo
 pix_plumber
 
 "common" load
+[
+: name "Chant" _title setptr ;
+]
 
 setup
+name
 add_drawfun
 # runthrough
 

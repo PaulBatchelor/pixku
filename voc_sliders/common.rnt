@@ -7,16 +7,34 @@
 : pd ptr ;
 : stream ptr ;
 : data stream pd ;
+: font ptr ;
+: title ptr ;
 
 : s1 0 ;
 : s2 0 ;
 : s3 0 ;
 : s4 0 ;
 
+: text 8 8 1 font img_text ;
+
+: default_title "Sliders" ;
+
+
 : barsetup
-80 _x_pos set 
+90 _x_pos set 
 2.0 cr cairo_set_line_width
 82 198 159 rgbizer cr cairo_set_source_rgb
+82 198 159 img_color
+title 0 0 text
+
+"Position" 80 290 text
+
+"Diameter" 220 290 text
+
+"Aspiration" 352 290 text
+
+"Velum" 512 290 text
+
 ;
 
 : bar 
@@ -59,6 +77,7 @@ _s4 "s4" data plumb_var
 : clean 
 surface cr cairo_free
 stream pd plumbstream_free pd plumb_free
+font img_close
 ;
 
 : setup 
@@ -67,5 +86,7 @@ surface cairo_create _cr setptr
 surface pix_imgcairo_setup
 44100 plumb_new _pd setptr pd plumbstream_new _stream setptr
 setup_variables
+"res/font.png" img_load _font setptr
+default_title _title setptr
 ;
 ]
