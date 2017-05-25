@@ -1,6 +1,6 @@
 pix_img
 [ 
-: src 0 ; 
+: src ptr ; 
 : xy 32 img_xy 8 * swap 8 * swap ;
 : glyph 8 8 src img_glyph ;
 : draw_glyph dup xy 8 rnd xy glyph inc ;
@@ -8,7 +8,7 @@ pix_img
 130 130 255 img_color
 img_fill
 
-"img/glyphs.png" img_load _src set
+"glyphs.png" img_load _src setptr
 
 0 0 130 img_color
 
