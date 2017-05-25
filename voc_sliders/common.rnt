@@ -1,0 +1,71 @@
+[
+: cr ptr ;
+: surface ptr ;
+: rgbizer 255 / rot 255 / rot 255 / rot ;
+: x_pos 0 ;
+: frame 0 ;
+: pd ptr ;
+: stream ptr ;
+: data stream pd ;
+
+: s1 0 ;
+: s2 0 ;
+: s3 0 ;
+: s4 0 ;
+
+: barsetup
+80 _x_pos set 
+2.0 cr cairo_set_line_width
+82 198 159 rgbizer cr cairo_set_source_rgb
+;
+
+: bar 
+x_pos 80 40 200 cr cairo_rectangle
+cr cairo_stroke
+
+x_pos 5 + 85 1 -4 peak - 190 * + 30 
+-4 peak 190 * cr cairo_rectangle
+cr cairo_fill
+
+x_pos 140 + _x_pos set
+drop
+;
+
+
+: draw 
+60 45 48 rgbizer cr cairo_set_source_rgb
+cr cairo_paint
+barsetup s1 bar s2 bar s3 bar s4 bar 
+frame p
+frame cairo_frame surface cairo_surface_write_to_png
+frame inc _frame set
+;
+
+: null ;
+
+: add_drawfun _draw "draw" data plumb_func ;
+: runthrough _null "draw" data plumb_func ;
+: render "out.wav" 30 data plumb_write ;
+
+: setup_variables
+
+_s1 "s1" data plumb_var
+_s2 "s2" data plumb_var
+_s3 "s3" data plumb_var
+_s4 "s4" data plumb_var
+; 
+
+: parse data plumb_parse ;
+: clean 
+surface cr cairo_free
+stream pd plumbstream_free pd plumb_free
+;
+
+: setup 
+640 360 cairo_image_surface_create _surface setptr
+surface cairo_create _cr setptr
+surface pix_imgcairo_setup
+44100 plumb_new _pd setptr pd plumbstream_new _stream setptr
+setup_variables
+;
+]

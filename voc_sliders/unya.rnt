@@ -1,0 +1,43 @@
+
+
+pix_img_cairo
+pix_plumber
+
+"common" load
+
+setup
+add_drawfun
+# runthrough
+
+"_voc './voc.so' fl" parse
+"_rate var" parse
+"_seq '0 2 4 7 9 11 12' gen_vals" parse
+"15 inv 1 sine 0.3 3 biscale _rate set" parse
+
+"_rate get metro 0.1 0.01 0.1 tenv 0.0 0.3 scale" parse
+"_s1 set" parse
+
+"_rate get metro 0.1 0.1 0.3 tenv 0.0 _rate get metro 0.3 0.9 trand scale" parse
+"_s2 set" parse
+
+"0.9 _s3 set" parse
+"_rate get metro tog" parse
+"_s4 set" parse
+
+
+"_rate get metro 1 _seq tseq 48 +  5 6 1 randi 1 sine 0.3 * + mtof" parse
+"_s1 get" parse
+"_s2 get" parse
+"_s3 get" parse
+"_s4 get" parse
+"_voc fe" parse 
+
+
+"dup dup 0.9 8000 revsc drop -14 ampdb * dcblk + " parse
+
+"30 metro _draw fe" parse
+
+"_voc fc" parse
+
+render
+

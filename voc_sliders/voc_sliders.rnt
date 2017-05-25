@@ -1,0 +1,38 @@
+pix_img_cairo
+
+[
+: cr ptr ;
+: surface ptr ;
+: rgbizer 255 / rot 255 / rot 255 / rot ;
+: x_pos 0 ;
+
+: barsetup
+80 _x_pos set 
+2.0 cr cairo_set_line_width
+82 198 159 rgbizer cr cairo_set_source_rgb
+;
+
+: bar 
+x_pos 80 40 200 cr cairo_rectangle
+cr cairo_stroke
+
+x_pos 5 + 85 1 -4 peak - 190 * + 30 
+-4 peak 190 * cr cairo_rectangle
+cr cairo_fill
+
+x_pos 140 + _x_pos set
+;
+]
+
+640 360 cairo_image_surface_create _surface setptr
+surface cairo_create _cr setptr
+surface pix_imgcairo_setup
+
+60 45 48 rgbizer cr cairo_set_source_rgb
+cr cairo_paint
+
+barsetup 1 bar 0.5 bar 1 bar 1 bar
+
+"sliders.png" surface cairo_surface_write_to_png
+
+surface cr cairo_free

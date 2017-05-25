@@ -1,0 +1,42 @@
+pix_img_cairo
+pix_plumber
+
+"common" load
+[ : gate 0 ; ]
+
+setup
+add_drawfun
+# runthrough
+
+_gate "gate" data plumb_var
+
+"_ss1 var _ss2 var _ss3 var _ss4 var" parse
+
+"2 4 1 randi metro 0.7 maygate 0.03 port _gate set" parse
+
+# Set two signals: ssN stores the control signal to Voc, and sN stores
+# the signal to be visualized. Each visualized signal is scaled by the gate
+# signal, which will shut off the signal when there is no sound. While not
+# technically accurate, the visual timing makes everything else fall into
+# place.
+
+"0 1 3 randi dup _ss1 set _gate get * _s1 set" parse
+"0 1 3 20 1 randi randi dup _ss2 set _gate get * _s2 set" parse
+"0.0 0.9 0.3 randi dup _ss3 set _gate get * _s3 set" parse
+"0 1 0.1 4 1 randh randh 0.003 port dup _ss4 set _gate get * _s4 set" parse
+
+"_voc './voc.so' fl" parse
+"100 200 10 randi" parse
+"_ss1 get" parse
+"_ss2 get" parse
+"_ss3 get" parse
+"_ss4 get" parse
+"_voc fe" parse
+
+"_gate get *" parse
+
+"dup dup 1 2 8000 zrev drop -10 ampdb * +" parse
+
+"30 metro _draw fe" parse
+"_voc fc" parse
+render
