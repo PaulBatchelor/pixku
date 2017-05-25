@@ -3,6 +3,7 @@
 #include <runt.h>
 #include <cray.h>
 #include <img.h>
+#include <cairo/cairo.h>
 
 #include "pixku.h"
 
@@ -230,6 +231,61 @@ static int rproc_loadcray(runt_vm *vm, runt_ptr p)
     return RUNT_OK;
 }
 
+struct {
+    unsigned int w;
+    unsigned int h;
+    cairo_surface_t *surface;
+    unsigned char *data;
+} cairo_point_data;
+
+static void cairo_point(unsigned int x, unsigned int y)
+{
+    unsigned char *color;
+    unsigned int pos;
+    if(cairo_point_data.w == 0) return;
+
+    color = img_get_current_color();
+    pos = y * cairo_point_data.w * 4 + x * 4;
+
+    /* flippity floppity RGBA -> BGRA */
+   
+    cairo_point_data.data[pos] = color[2];
+    cairo_point_data.data[pos + 1] = color[1];
+    cairo_point_data.data[pos + 2] = color[0];
+
+    cairo_surface_mark_dirty(cairo_point_data.surface);
+}
+
+static int rproc_imgcairo_setup(runt_vm *vm, runt_ptr p)
+{
+    runt_int rc;
+    runt_stacklet *s;
+    cairo_surface_t *surface;
+
+    rc = runt_ppop(vm, &s);
+    RUNT_ERROR_CHECK(rc);
+    surface = runt_to_cptr(s->p);
+
+    cairo_surface_flush(surface);
+    cairo_point_data.surface = surface;
+    cairo_point_data.w = cairo_image_surface_get_width(surface);
+    cairo_point_data.h = cairo_image_surface_get_height(surface);
+    cairo_point_data.data = cairo_image_surface_get_data(surface);
+
+    return RUNT_OK;
+}
+
+static int rproc_loadimgcairo(runt_vm *vm, runt_ptr p)
+{
+    rproc_loadimg(vm, p);
+    rproc_loadcairo(vm, p);
+    cairo_point_data.w = 0;
+    img_set_point_function(cairo_point);
+    runt_word_define(vm, "pix_imgcairo_setup", 18, rproc_imgcairo_setup);
+    runt_mark_set(vm);
+    return RUNT_OK;
+}
+
 int pixku_runt_loader(runt_vm *vm)
 {
     runt_load_stdlib(vm);
@@ -238,6 +294,7 @@ int pixku_runt_loader(runt_vm *vm)
     runt_word_define(vm, "pix_cray", 8, rproc_loadcray);
     runt_word_define(vm, "pix_cairo", 9, rproc_loadcairo);
     runt_word_define(vm, "pix_plumber", 11, rproc_loadplumber);
+    runt_word_define(vm, "pix_img_cairo", 13, rproc_loadimgcairo);
     return RUNT_OK;
 }
 

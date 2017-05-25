@@ -1,0 +1,34 @@
+pix_img_cairo
+
+[
+: cr ptr ;
+: surface ptr ;
+]
+
+640 360 cairo_image_surface_create _surface setptr
+surface cairo_create _cr setptr
+surface pix_imgcairo_setup
+
+0 0.2 0 cr cairo_set_source_rgb
+cr cairo_paint
+
+255 255 0 img_color
+0 180 640 180 img_line
+
+0 255 0 img_color
+0 90 640 90 img_line
+
+0 255 255 img_color
+0 270 640 270 img_line
+
+1 1 1 cr cairo_set_source_rgb
+320 180 100 0 2 cr cairo_arc
+cr cairo_fill
+
+241 156 187 img_color
+0 135 640 135 img_line
+0 225 640 225 img_line
+
+"out.png" surface cairo_surface_write_to_png
+
+surface cr cairo_free
