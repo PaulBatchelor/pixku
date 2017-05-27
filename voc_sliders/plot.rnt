@@ -1,0 +1,61 @@
+pix_img_cairo
+pix_plumber
+"common" load
+"./map.so" dynload
+"code" load
+
+[
+: plot_x 10 ;
+: plot_y 0 ;
+# step size is 640 / 44
+: step_size 13 ;
+: first_point 1 ;
+
+: plot_step plot_x step_size + _plot_x set ;
+
+: mapfun_c 
+3.5 / 1 swap - _plot_y set 
+
+# if first point, use move_to instead of line_to
+first_point {
+    0 _first_point set
+    plot_x plot_y 400 * 60 - cr cairo_move_to 
+    plot_step
+    end
+} goto
+
+plot_x plot_y 400 * 60 - cr cairo_line_to 
+plot_step 
+end
+;
+
+: mapfun _mapfun_c call ;
+#: mapfun drop ;
+
+: plotter 
+10 _plot_x set
+1 _first_point set
+brown rgbizer cr cairo_set_source_rgb cr cairo_paint
+cyan rgbizer cr cairo_set_source_rgb
+_mapfun voc vocmap
+cr cairo_stroke
+writeframe 
+;
+
+: stepstep pd plumbstep ;
+
+]
+
+setup
+
+_plotter set_drawfun
+
+load_babble 
+
+data plumb_compile
+
+"vocref" pd plumb_udata vocdata _voc setptr 
+
+writefile
+
+clean

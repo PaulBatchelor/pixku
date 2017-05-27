@@ -69,6 +69,7 @@ _draw "draw" data plumb_func
 "dup dup 0.94 8000 revsc drop -10 ampdb _posY get * * + " data plumb_parse
 "30 metro _draw fe" data plumb_parse
 
+data plumb_compile
 "out.wav" 10 data plumb_write
 
 # draw

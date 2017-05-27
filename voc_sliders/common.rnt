@@ -9,6 +9,10 @@
 : data stream pd ;
 : font ptr ;
 : title ptr ;
+: voc ptr ;
+
+: cyan 82 198 159 ;
+: brown 60 45 48 ;
 
 : s1 0 ;
 : s2 0 ;
@@ -23,8 +27,8 @@
 : barsetup
 90 _x_pos set 
 2.0 cr cairo_set_line_width
-82 198 159 rgbizer cr cairo_set_source_rgb
-82 198 159 img_color
+cyan rgbizer cr cairo_set_source_rgb
+cyan img_color
 title 0 0 text
 
 "Position" 80 290 text
@@ -49,21 +53,26 @@ x_pos 140 + _x_pos set
 drop
 ;
 
-
-: draw 
-60 45 48 rgbizer cr cairo_set_source_rgb
-cr cairo_paint
-barsetup s1 bar s2 bar s3 bar s4 bar 
+: writeframe 
 frame p
 frame cairo_frame surface cairo_surface_write_to_png
 frame inc _frame set
 ;
 
+: draw 
+brown rgbizer cr cairo_set_source_rgb
+cr cairo_paint
+barsetup s1 bar s2 bar s3 bar s4 bar 
+writeframe
+;
+
 : null ;
 
+: set_drawfun "draw" data plumb_func ;
 : add_drawfun _draw "draw" data plumb_func ;
 : runthrough _null "draw" data plumb_func ;
-: render "out.wav" 30 data plumb_write ;
+: writefile "out.wav" 30 data plumb_write ;
+: render data plumb_compile writefile ;
 
 : setup_variables
 
@@ -80,13 +89,22 @@ stream pd plumbstream_free pd plumb_free
 font img_close
 ;
 
-: setup 
+: setup_cairo 
 640 360 cairo_image_surface_create _surface setptr
 surface cairo_create _cr setptr
 surface pix_imgcairo_setup
-44100 plumb_new _pd setptr pd plumbstream_new _stream setptr
-setup_variables
 "res/font.png" img_load _font setptr
 default_title _title setptr
+;
+
+: setup_plumber
+setup_cairo
+44100 plumb_new _pd setptr pd plumbstream_new _stream setptr
+setup_variables
+;
+
+: setup 
+setup_cairo
+setup_plumber
 ;
 ]

@@ -52,6 +52,7 @@ _draw "draw" stream pd plumb_func
 "_s get 300 600 scale 0.5 saw 1000 0.3 moogladder" stream pd plumb_parse
 "30 metro _draw fe" stream pd plumb_parse
 
+stream pd plumb_compile
 "out.wav" 10 stream pd plumb_write
 
 clean
