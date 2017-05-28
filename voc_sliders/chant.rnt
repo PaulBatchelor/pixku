@@ -1,0 +1,25 @@
+[
+: name "Chant" _title setptr ;
+: load_chant
+"_voc './voc.so' fl" parse
+
+"0.1 1 sine 0 1 biscale _s1 set" parse
+"0.9 _s2 set" parse
+"0.9 _s3 set" parse
+"0.3 1 sine 0 1 biscale _s4 set" parse
+
+"36 0.3 1 4 jitter + mtof " parse
+"_s1 get" parse
+"_s2 get" parse
+"_s3 get" parse
+"_s4 get" parse
+"_voc fe 36 mtof 70 5 eqfil" parse
+
+"dup dup 0.97 10000 revsc drop -14 ampdb * dcblk + -3 ampdb * " parse
+"30 metro _draw fe" parse
+
+"_voc fc" parse
+
+;
+]
+
