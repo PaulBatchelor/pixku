@@ -1,0 +1,14 @@
+pix_img_cairo
+pix_plumber
+
+"common" load
+"chant" load
+
+setup
+name
+add_drawfun
+# runthrough
+
+load_chant
+
+render

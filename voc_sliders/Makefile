@@ -13,7 +13,7 @@ slider_test:
 	$(PIXKU) $@.rnt
 	make $@.mp4
 
-chant:
+chant_sliders:
 	$(PIXKU) $@.rnt
 	make $@.mp4
 
@@ -25,7 +25,7 @@ unya:
 	$(PIXKU) $@.rnt
 	make $@.mp4
 
-plot: map.so
+babble_plot: map.so
 	$(PIXKU) $@.rnt
 	make $@.mp4
 
