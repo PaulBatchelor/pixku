@@ -4,7 +4,8 @@ PIXKU=../pixku -c 1024
 FFMPEG_OPTIONS=-i tmp.wav -framerate 30 
 FFMPEG_OPTIONS+=-i %04d.png -c:v libx264 -c:a aac -y -strict -2
 
-default: chant babble_sliders unya map.so
+default: chant_sliders babble_sliders unya_sliders map.so\
+	chant_plot unya_plot babble_plot
 
 CFLAGS=-I$(HOME)/.runt/include  -Wall -g
 LDFLAGS = -L$(HOME)/.runt/lib -lrunt libvoc.a -lsporth -lsoundpipe 
@@ -21,7 +22,7 @@ babble_sliders:
 	$(PIXKU) $@.rnt
 	make $@.mp4
 
-unya:
+unya_sliders:
 	$(PIXKU) $@.rnt
 	make $@.mp4
 
@@ -30,6 +31,10 @@ babble_plot: map.so
 	make $@.mp4
 
 chant_plot: map.so
+	$(PIXKU) $@.rnt
+	make $@.mp4
+
+unya_plot: map.so
 	$(PIXKU) $@.rnt
 	make $@.mp4
 
@@ -49,8 +54,10 @@ cleanup:
 clean: 
 	make cleanup
 	rm -rf slider_test.mp4
-	rm -rf chant.mp4
-	rm -rf babble.mp4
-	rm -rf unya.mp4
-	rm -rf plot.mp4
+	rm -rf chant_sliders.mp4
+	rm -rf babble_sliders.mp4
+	rm -rf unya_sliders.mp4
+	rm -rf chant_plot.mp4
+	rm -rf babble_plot.mp4
+	rm -rf unya_plot.mp4
 	rm -rf map.so

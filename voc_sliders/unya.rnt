@@ -1,18 +1,6 @@
-
-
-pix_img_cairo
-pix_plumber
-
-"common" load
 [
 : name "Unya" _title setptr ;
-]
-
-setup
-name
-add_drawfun
-# runthrough
-
+: load_unya 
 "_voc './voc.so' fl" parse
 "_rate var" parse
 "_seq '0 2 4 7 9 11 12' gen_vals" parse
@@ -34,7 +22,7 @@ add_drawfun
 "_s2 get" parse
 "_s3 get" parse
 "_s4 get" parse
-"_voc fe" parse 
+"_voc _vocref ref fe" parse 
 
 
 "dup dup 0.9 8000 revsc drop -14 ampdb * dcblk + " parse
@@ -42,6 +30,6 @@ add_drawfun
 "30 metro _draw fe" parse
 
 "_voc fc" parse
-
-render
+;
+]
 
