@@ -2,7 +2,7 @@ pix_img_cairo
 pix_plumber
 "common" load
 "./map.so" dynload
-"code" load
+"babble" load
 
 [
 : plot_x 10 ;
@@ -30,19 +30,36 @@ end
 ;
 
 : mapfun _mapfun_c call ;
-#: mapfun drop ;
 
-: plotter 
-10 _plot_x set
-1 _first_point set
-brown rgbizer cr cairo_set_source_rgb cr cairo_paint
-cyan rgbizer cr cairo_set_source_rgb
-_mapfun voc vocmap
-cr cairo_stroke
-writeframe 
+: minibar
+-4 peak 1 + -4 peak 10 - text 
+
+-3 peak -3 peak 1 -4 peak - 80 *  + 
+
+10 
+-4 peak 80 * 
+cr cairo_rectangle 
+cr cairo_fill
+3 drops
 ;
 
-: stepstep pd plumbstep ;
+: plotter 
+brown rgbizer cr cairo_set_source_rgb cr cairo_paint
+cyan rgbizer cr cairo_set_source_rgb
+cyan img_color
+title 0 0 text 
+10 _plot_x set
+1 _first_point set
+_mapfun voc vocmap
+cr cairo_stroke
+
+630 280 s4 "v" minibar 
+620 280 s3 "a" minibar 
+610 280 s2 "d" minibar 
+600 280 s1 "p" minibar 
+writeframe 
+
+;
 
 ]
 
@@ -51,6 +68,7 @@ setup
 _plotter set_drawfun
 
 load_babble 
+name
 
 data plumb_compile
 

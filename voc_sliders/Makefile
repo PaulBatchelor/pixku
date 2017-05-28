@@ -1,10 +1,10 @@
 .PHONY: render 
 
-PIXKU=../pixku
+PIXKU=../pixku -c 1024
 FFMPEG_OPTIONS=-i tmp.wav -framerate 30 
 FFMPEG_OPTIONS+=-i %04d.png -c:v libx264 -c:a aac -y -strict -2
 
-default: chant babble unya map.so
+default: chant babble_sliders unya map.so
 
 CFLAGS=-I$(HOME)/.runt/include  -Wall -g
 LDFLAGS = -L$(HOME)/.runt/lib -lrunt libvoc.a -lsporth -lsoundpipe 
@@ -17,7 +17,7 @@ chant:
 	$(PIXKU) $@.rnt
 	make $@.mp4
 
-babble:
+babble_sliders:
 	$(PIXKU) $@.rnt
 	make $@.mp4
 

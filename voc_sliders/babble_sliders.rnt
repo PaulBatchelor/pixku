@@ -1,0 +1,15 @@
+pix_img_cairo
+pix_plumber
+
+"common" load
+"babble" load
+
+setup
+name
+add_drawfun
+# runthrough
+
+load_babble
+
+draw
+render

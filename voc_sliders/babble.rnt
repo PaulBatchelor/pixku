@@ -1,19 +1,9 @@
-pix_img_cairo
-pix_plumber
-
-"common" load
-[ 
+[
 : gate 0 ; 
-: name "Babble" _title setptr ;
-]
-
-setup
-name
-add_drawfun
-# runthrough
+: name "babble" _title setptr ;
+: load_babble
 
 _gate "gate" data plumb_var
-
 "_ss1 var _ss2 var _ss3 var _ss4 var" parse
 
 "2 4 1 randi metro 0.7 maygate 0.03 port _gate set" parse
@@ -35,7 +25,7 @@ _gate "gate" data plumb_var
 "_ss2 get" parse
 "_ss3 get" parse
 "_ss4 get" parse
-"_voc fe" parse
+"_voc _vocref ref fe" parse
 
 "_gate get *" parse
 
@@ -44,5 +34,5 @@ _gate "gate" data plumb_var
 "30 metro _draw fe" parse
 "_voc fc" parse
 
-draw
-render
+;
+]
