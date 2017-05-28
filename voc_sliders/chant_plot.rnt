@@ -1,0 +1,21 @@
+pix_img_cairo
+pix_plumber
+"common" load
+"./map.so" dynload
+"chant" load
+"plot" load
+
+setup
+
+_plotter set_drawfun
+
+load_chant
+name
+
+data plumb_compile
+
+"vocref" pd plumb_udata vocdata _voc setptr 
+
+writefile
+
+clean

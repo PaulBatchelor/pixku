@@ -29,6 +29,10 @@ babble_plot: map.so
 	$(PIXKU) $@.rnt
 	make $@.mp4
 
+chant_plot: map.so
+	$(PIXKU) $@.rnt
+	make $@.mp4
+
 %.mp4: 
 	sox out.wav -c 2 tmp.wav
 	ffmpeg  $(FFMPEG_OPTIONS) $@

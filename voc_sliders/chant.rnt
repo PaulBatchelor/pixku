@@ -13,7 +13,7 @@
 "_s2 get" parse
 "_s3 get" parse
 "_s4 get" parse
-"_voc fe 36 mtof 70 5 eqfil" parse
+"_voc _vocref ref fe 36 mtof 70 5 eqfil" parse
 
 "dup dup 0.97 10000 revsc drop -14 ampdb * dcblk + -3 ampdb * " parse
 "30 metro _draw fe" parse
@@ -22,4 +22,3 @@
 
 ;
 ]
-
