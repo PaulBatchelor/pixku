@@ -4,3 +4,6 @@
 [submodule "_libs/runt-img"]
 	path = _libs/runt-img
 	url = git://www.github.com/paulbatchelor/runt-img
+[submodule "_libs/runt-plumber"]
+	path = _libs/runt-plumber
+	url = git://www.github.com/paulbatchelor/runt-plumber
