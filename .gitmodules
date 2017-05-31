@@ -7,3 +7,6 @@
 [submodule "_libs/runt-plumber"]
 	path = _libs/runt-plumber
 	url = git://www.github.com/paulbatchelor/runt-plumber
+[submodule "_libs/cray"]
+	path = _libs/cray
+	url = git://www.github.com/paulbatchelor/cray
