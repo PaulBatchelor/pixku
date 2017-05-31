@@ -1,3 +1,6 @@
 [submodule "_libs/runt-cairo"]
 	path = _libs/runt-cairo
 	url = git://www.github.com/paulbatchelor/runt-cairo
+[submodule "_libs/runt-img"]
+	path = _libs/runt-img
+	url = git://www.github.com/paulbatchelor/runt-img
