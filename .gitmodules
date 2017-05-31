@@ -10,3 +10,6 @@
 [submodule "_libs/cray"]
 	path = _libs/cray
 	url = git://www.github.com/paulbatchelor/cray
+[submodule "_libs/runt-scheme"]
+	path = _libs/runt-scheme
+	url = git://www.github.com/paulbatchelor/runt-scheme

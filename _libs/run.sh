@@ -2,7 +2,8 @@ RUNT_LIBS=(
 cray 
 runt-cairo 
 runt-img 
-runt-plumber)
+runt-plumber
+runt-scheme)
 
 for val in ${RUNT_LIBS[@]}
 do

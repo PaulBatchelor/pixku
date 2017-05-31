@@ -11,6 +11,7 @@ runt_int runt_load_img(runt_vm *vm);
 runt_int runt_load_cray(runt_vm *vm);
 runt_int runt_load_cairo(runt_vm *vm);
 runt_int runt_load_plumber(runt_vm *vm);
+runt_int runt_load_scheme(runt_vm *vm);
 
 static void bgcolor(cray_scene *scene, cray_ray *ray, int x, int y, CRAYFLT *color)
 {
@@ -286,6 +287,36 @@ static int rproc_loadimgcairo(runt_vm *vm, runt_ptr p)
     return RUNT_OK;
 }
 
+static int rproc_loadscheme(runt_vm *vm, runt_ptr p)
+{
+    runt_load_scheme(vm);
+    runt_mark_set(vm);
+    return RUNT_OK;
+}
+
+static int rproc_rnd(runt_vm *vm, runt_ptr p)
+{
+    runt_int rc;
+    runt_stacklet *s;
+    runt_float min;
+    runt_float max;
+
+    rc = runt_ppop(vm, &s);
+    RUNT_ERROR_CHECK(rc);
+    max = s->f;
+    
+    rc = runt_ppop(vm, &s);
+    RUNT_ERROR_CHECK(rc);
+    min = s->f;
+
+    rc = runt_ppush(vm, &s);
+    RUNT_ERROR_CHECK(rc);
+
+    s->f = min + ((runt_float) rand() / RAND_MAX) * (max - min);
+
+    return RUNT_OK;
+}
+
 int pixku_runt_loader(runt_vm *vm)
 {
     runt_load_stdlib(vm);
@@ -295,6 +326,8 @@ int pixku_runt_loader(runt_vm *vm)
     runt_word_define(vm, "pix_cairo", 9, rproc_loadcairo);
     runt_word_define(vm, "pix_plumber", 11, rproc_loadplumber);
     runt_word_define(vm, "pix_img_cairo", 13, rproc_loadimgcairo);
+    runt_word_define(vm, "pix_scheme", 10, rproc_loadscheme);
+    runt_word_define(vm, "pix_rnd", 7, rproc_rnd);
     return RUNT_OK;
 }
 
