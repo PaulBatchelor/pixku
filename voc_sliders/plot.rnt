@@ -48,7 +48,7 @@ _mapfun voc vocmap
 cr cairo_stroke
 
 630 280 s4 "v" minibar 
-620 280 s3 "a" minibar 
+620 280 s3 "t" minibar 
 610 280 s2 "d" minibar 
 600 280 s1 "p" minibar 
 writeframe 
