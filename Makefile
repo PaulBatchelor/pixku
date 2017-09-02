@@ -18,6 +18,10 @@ all: pixku
 pixku: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LDFLAGS)
 
+install: pixku
+	mkdir -p $(HOME)/.runt/bin
+	install pixku $(HOME)/.runt/bin
+
 clean: 
 	rm -rf pixku $(OBJ)
 	rm -rf pixku.so
