@@ -1,0 +1,46 @@
+# A way to test libline 
+pix_plumber
+pix_cairo
+
+"helper.rnt" eval
+
+setup 
+
+# local variables
+[
+: freq 440 ;
+
+# draw routine
+: draw 
+1 1 1 1 cr cairo_set_source_rgba
+cr cairo_paint
+
+159 181 190 rgbizer cr cairo_set_source_rgb
+
+320 180 30 70 freq 0.01 * * + 0 2 cr cairo_arc
+cr cairo_fill
+frame p
+frame cairo_frame surface cairo_surface_write_to_png
+frame inc _frame set
+;
+]
+
+_freq "freq" sporth_var
+
+# Create the patch
+
+"4 _out 'll.scm' ps" parse
+"_ll fe" parse
+"_freq get 0.01 * 220 440 scale 0.5 sine" parse
+
+# register draw function
+_draw "draw" sporth_func
+"30 metro _draw fe" parse
+
+# compile sporth patch
+
+compile
+
+"ll.wav" 10 writewav
+
+clean

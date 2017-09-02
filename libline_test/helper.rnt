@@ -1,0 +1,45 @@
+[
+# Plumber variables
+: pd ptr ;
+: stream ptr ;
+: data stream pd ;
+
+# Cairo Variables
+: frame 0 ;
+: cr ptr ;
+: surface ptr ;
+
+# Parse Sporth string 
+: parse data plumb_parse ;
+
+# Setup Function 
+: setup 
+44100 plumb_new _pd setptr
+pd plumbstream_new _stream setptr 
+
+640 360 cairo_image_surface_create _surface setptr
+surface cairo_create _cr setptr 
+;
+
+# Clean function 
+: clean
+data plumbstream_free
+pd plumb_free 
+surface cr cairo_free
+;
+
+: compile
+data plumb_compile ;
+: sporth_var data plumb_var ;
+: writewav data plumb_write ;
+
+: rgbizer
+255 / 
+rot 255 /
+rot 255 /
+rot
+;
+
+: sporth_func data plumb_func ;
+
+]
