@@ -1,0 +1,35 @@
+pix_plumber
+
+[
+: pd ptr ;
+: stream ptr ;
+: data stream pd ;
+]
+
+44100 plumb_new _pd setptr 
+pd plumbstream_new _stream setptr 
+pd pix_spigot
+
+[
+: state ptr ;
+: step state spigot_step ; 
+]
+new_state tracker dup _state setptr spigot_state
+"notes.rnt" tracker_open
+"notes" stream tracker_snotes
+"gates" stream tracker_sgates
+
+_step "spigot" data plumb_func
+
+"8 metro _spigot fe" data plumb_parse
+"_ps 4 'sine.scm' psh" data plumb_parse
+"0 _gates tget 0 _ps pst" data plumb_parse
+
+state spigot_init
+data plumb_compile
+
+"spigot_test.wav" 10 data plumb_write
+
+state spigot_free
+stream pd plumbstream_free
+pd plumb_free

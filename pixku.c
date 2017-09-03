@@ -4,6 +4,9 @@
 #include <cray.h>
 #include <img.h>
 #include <cairo/cairo.h>
+#include <soundpipe.h>
+#include <sporth.h>
+#include <spigot.h>
 
 #include "pixku.h"
 
@@ -294,6 +297,22 @@ static int rproc_loadscheme(runt_vm *vm, runt_ptr p)
     return RUNT_OK;
 }
 
+static int rproc_loadspigot(runt_vm *vm, runt_ptr p)
+{
+    plumber_data *pd;
+    runt_int rc;
+    runt_stacklet *s;
+    int dummy;
+
+    rc = runt_ppop(vm, &s);
+    RUNT_ERROR_CHECK(rc);
+    pd = runt_to_cptr(s->p);
+    
+    spigot_load(pd, vm, &dummy);
+
+    return RUNT_OK;
+}
+
 static int rproc_rnd(runt_vm *vm, runt_ptr p)
 {
     runt_int rc;
@@ -328,6 +347,7 @@ int pixku_runt_loader(runt_vm *vm)
     runt_word_define(vm, "pix_img_cairo", 13, rproc_loadimgcairo);
     runt_word_define(vm, "pix_scheme", 10, rproc_loadscheme);
     runt_word_define(vm, "pix_rnd", 7, rproc_rnd);
+    runt_word_define(vm, "pix_spigot", 10, rproc_loadspigot);
     return RUNT_OK;
 }
 
