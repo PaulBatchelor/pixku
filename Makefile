@@ -6,6 +6,7 @@ LDFLAGS += -lrunt_cairo -lcairo
 LDFLAGS += -lrunt_plumber
 LDFLAGS += -lrunt_scheme
 LDFLAGS += -lspigot -lglfw -lsqlite3
+LDFLAGS += -lstdc++
 
 LDFLAGS +=-lsporth -lsoundpipe -lm -ljack -ldl -lpthread -lsndfile
 

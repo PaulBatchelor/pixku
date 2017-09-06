@@ -16,6 +16,7 @@ pd pix_spigot
 : fd 0 ;
 : db ptr ;
 ]
+
 new_state tracker dup _state setptr spigot_state
 "notes.rnt" tracker_open
 "notes" stream tracker_snotes
@@ -43,6 +44,9 @@ state spigot_init
 data plumb_compile
 
 "spigot_test.wav" 10 data plumb_write
+
+# uncomment to render in realtime
+# pd spigot_audio
 
 state spigot_free
 stream pd plumbstream_free
