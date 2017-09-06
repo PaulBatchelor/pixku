@@ -12,7 +12,7 @@ pd pix_spigot
 
 [
 : state ptr ;
-: step state spigot_step ; 
+: step spigot_gfx_step state spigot_step ; 
 : fd 0 ;
 : db ptr ;
 ]
@@ -35,7 +35,7 @@ spigot_db "data.db" spigot_db_open _db setptr
 "8 metro dup _clk set _spigot fe" data plumb_parse
 "_ps 4 'sine.scm' psh" data plumb_parse
 "0 _gates tget 0 _ps pst" data plumb_parse
-"_clk get 4 0 tdiv dup _kick tbldur inv 0 tphasor " data plumb_parse
+"1 _gates tget 0.5 0 thresh dup _kick tbldur inv 0 tphasor " data plumb_parse
 "1 0 0 _kick tabread swap _kick tbldur tgate * + " data plumb_parse 
 "-6 ampdb * " data plumb_parse
 
@@ -43,10 +43,10 @@ spigot_db "data.db" spigot_db_open _db setptr
 state spigot_init
 data plumb_compile
 
-"spigot_test.wav" 10 data plumb_write
+# "spigot_test.wav" 10 data plumb_write
 
 # uncomment to render in realtime
-# pd spigot_audio
+1 state pd spigot_audio
 
 state spigot_free
 stream pd plumbstream_free

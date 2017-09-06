@@ -9,6 +9,16 @@
 24 tracker_noteoff
 
 1 tracker_chan
+60 0 tracker_note
+1 tracker_noteoff
+60 4 tracker_note
+5 tracker_noteoff
+60 10 tracker_note
+11 tracker_noteoff
+60 12 tracker_note
+13 tracker_noteoff
+60 16 tracker_note
+17 tracker_noteoff
 
 2 tracker_chan
 
