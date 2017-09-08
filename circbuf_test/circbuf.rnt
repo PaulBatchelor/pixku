@@ -1,0 +1,86 @@
+# A way to test libline 
+pix_plumber
+pix_cairo
+
+"helper.rnt" eval
+
+setup 
+
+# local variables
+[
+: freq 440 ;
+
+: tmp 0 ;
+
+: id 0 ;
+
+: pos 
+0 0 
+0 0 
+0 0 
+0 0 
+0 0 
+0 0 ;
+
+: cbuf pixku_circbuf ;
+
+: cadd 1 cbuf ;
+
+: cinit _id set 
+# randomly set x and y and store it
+640 rnd _pos id 2 * + set
+360 rnd _pos id 2 * 1 + + set
+;
+
+: circ_step 
+_id set
+_tmp set
+255 166 177 rgbizer tmp cr cairo_set_source_rgba
+
+_pos id 2 * 1 + + ex 
+_pos id 2 * 2 + + ex
+30 300 1 tmp - * + 
+0 2 cr cairo_arc
+cr cairo_fill
+;
+
+# draw routine
+: draw 
+43 45 48 rgbizer 1 cr cairo_set_source_rgba
+cr cairo_paint
+
+# circular buffer
+2 cbuf
+frame p
+frame cairo_frame surface cairo_surface_write_to_png
+frame inc _frame set
+;
+
+: clk 0 ;
+]
+
+0.9 6 _circ_step _cinit 0 cbuf 
+
+_freq "freq" sporth_var
+_clk "clk" sporth_var
+
+# create function to add values to circular buffer
+_cadd "poke" sporth_func
+
+"_dt '0.2 0.2 0.2 0.2' gen_vals" parse
+"2 dmetro 0 0 1 _dt dtrig dup dup _clk set _poke fe " parse
+
+"0.001 0.1 0.1 tenvx _clk get 200 1000 trand 0.5 sine * " parse
+
+# register draw function
+_draw "draw" sporth_func
+"30 metro _draw fe" parse
+
+
+# compile sporth patch
+
+compile
+
+"circbuf.wav" 5 writewav
+
+clean

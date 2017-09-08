@@ -348,6 +348,7 @@ int pixku_runt_loader(runt_vm *vm)
     runt_word_define(vm, "pix_scheme", 10, rproc_loadscheme);
     runt_word_define(vm, "pix_rnd", 7, rproc_rnd);
     runt_word_define(vm, "pix_spigot", 10, rproc_loadspigot);
+    pixku_circbuf(vm);
     return RUNT_OK;
 }
 
