@@ -22,4 +22,6 @@ int pixku_init(pixku_data *pix,
 void pixku_draw(pixku_data *pix);
 void pixku_clean(pixku_data *pix);
 
+int pixku_circbuf(runt_vm *vm);
+
 #endif
