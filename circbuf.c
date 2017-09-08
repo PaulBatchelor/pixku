@@ -14,6 +14,7 @@ typedef struct {
 
 static runt_int rcopy_circbuf(runt_vm *vm, runt_cell *src, runt_cell *dst)
 {
+    dst->fun = src->fun;
     return RUNT_OK;
 }
 
