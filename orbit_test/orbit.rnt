@@ -1,0 +1,37 @@
+pix_plumber
+pix_cairo
+
+"helper.rnt" eval
+
+setup
+
+[
+: orbit pixku_orbit ;
+: xv 0 ;
+: yv 0 ;
+: scale 1 ;
+
+: draw 
+scale 1 orbit _xv set _yv set
+43 45 48 rgbizer 1 cr cairo_set_source_rgba
+cr cairo_paint
+255 166 177 rgbizer 1 cr cairo_set_source_rgba
+320 100 xv * + 180 100 yv * + 25 0 2 cr cairo_arc
+cr cairo_fill
+frame p
+frame cairo_frame surface cairo_surface_write_to_png
+frame inc _frame set
+;
+]
+
+0.5 0 orbit 
+
+_scale "scale" sporth_var
+"0.13 1 sine 0 1 biscale _scale set" parse
+"_scale get 48 60 scale mtof 0.3 sine " parse
+
+_draw "draw" sporth_func
+"30 metro _draw fe" parse
+compile
+
+"orbit.wav" 10 writewav
