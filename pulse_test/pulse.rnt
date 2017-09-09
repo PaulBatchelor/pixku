@@ -1,0 +1,37 @@
+pix_plumber
+pix_cairo
+
+"helper.rnt" eval
+
+setup
+
+[
+: pulse pixku_pulse ;
+
+: ticker 2 pulse ;
+
+: draw 
+43 45 48 rgbizer 1 cr cairo_set_source_rgba
+cr cairo_paint
+255 166 177 rgbizer 1 pulse cr cairo_set_source_rgba
+320 180 100 0 2 cr cairo_arc
+cr cairo_fill
+frame p
+frame cairo_frame surface cairo_surface_write_to_png
+frame inc _frame set
+;
+]
+# set up pulse
+
+0.9 0 pulse
+
+_ticker "ticker" sporth_func 
+"1 metro dup _ticker fe" parse
+"0.001 0.01 0.2 tenvx 1000 0.5 sine *" parse
+
+_draw "draw" sporth_func
+"30 metro _draw fe" parse
+
+compile
+
+"pulse.wav" 5 writewav
