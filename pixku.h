@@ -24,5 +24,6 @@ void pixku_clean(pixku_data *pix);
 
 int pixku_circbuf(runt_vm *vm);
 int pixku_pulse(runt_vm *vm);
+int pixku_orbit(runt_vm *vm);
 
 #endif

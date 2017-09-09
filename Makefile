@@ -1,4 +1,4 @@
-OBJ=pixku.o ugen.o main.o circbuf.o pulse.o
+OBJ=pixku.o ugen.o main.o circbuf.o pulse.o orbit.o
 
 CFLAGS=-I$(HOME)/.runt/include -fPIC -Wall -ansi -g
 LDFLAGS= -L$(HOME)/.runt/lib/ -lrunt -ldl -lrunt_img -lGL -lrunt_cray -lm
