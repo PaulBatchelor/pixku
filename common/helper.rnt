@@ -10,6 +10,8 @@
 : surface ptr ;
 : width 640 ;
 : height 360 ;
+: zoomX 1 ;
+: zoomY 1 ;
 
 # Parse Sporth string 
 : parse data plumb_parse ;
@@ -19,8 +21,9 @@
 44100 plumb_new _pd setptr
 pd plumbstream_new _stream setptr 
 
-width height cairo_image_surface_create _surface setptr
+width zoomX * height zoomY * cairo_image_surface_create _surface setptr
 surface cairo_create _cr setptr 
+zoomX zoomY cr cairo_scale
 ;
 
 # Clean function 

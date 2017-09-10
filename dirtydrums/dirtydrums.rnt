@@ -3,6 +3,7 @@ pix_cairo
 
 "../common/helper.rnt" eval
 
+# 2 _zoomX set 2 _zoomY set
 setup
 pd pix_spigot
 
@@ -85,7 +86,7 @@ compile
 "notes.rnt" step16_open
 
 data plumb_prog
-"dirtydrums.wav" 10 data plumb_write
+"dirtydrums.wav" 3 data plumb_write
 
 # uncomment to render in realtime
 # 1 state pd spigot_audio
