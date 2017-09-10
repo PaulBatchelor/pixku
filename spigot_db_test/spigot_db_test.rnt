@@ -1,0 +1,65 @@
+pix_plumber
+
+[
+: pd ptr ;
+: stream ptr ;
+: data stream pd ;
+]
+
+44100 plumb_new _pd setptr 
+pd plumbstream_new _stream setptr 
+pd pix_spigot
+
+[
+: state ptr ;
+: clk 0 ;
+: step spigot_gfx_step state spigot_step ; 
+: compute clk state spigot_compute ;
+: fd 0 ;
+: db ptr ;
+]
+
+new_state step16 dup _state setptr spigot_state
+"trig" stream step16_strig
+
+_step "spigot" data plumb_func
+_compute "compute" data plumb_func
+
+# open db 
+
+spigot_db "data.db" spigot_db_open _db setptr
+
+1 "cdb" db data spigot_cdb _fd set
+
+_clk "clk" data plumb_var
+
+"_kick 'kick' _cdb cdbtab" data plumb_parse
+"8 metro dup _clk set _spigot fe" data plumb_parse
+"1 _compute fe" data plumb_parse
+"0 _trig tget dup" data plumb_parse
+"_kick tbldur inv 0 tphasor" data plumb_parse
+"1 0 0 _kick tabread" data plumb_parse
+"swap _kick tbldur tgate *" data plumb_parse
+"-6 ampdb * " data plumb_parse
+
+
+state spigot_init
+data plumb_compile
+
+0 step16_row
+0 step16_on
+4 step16_on
+8 step16_on
+12 step16_on
+14 step16_on
+
+"spigot_db_test.wav" 10 data plumb_write
+
+# uncomment to render in realtime
+# 1 state pd spigot_audio
+
+state spigot_free
+stream pd plumbstream_free
+pd plumb_free
+fd spigot_cdb_close
+db spigot_db_close
