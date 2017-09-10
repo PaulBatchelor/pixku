@@ -65,7 +65,7 @@ static runt_int rproc_pulse(runt_vm *vm, runt_ptr p)
             if(pls->is_running) {
                 s->f = pls->val;
                 pls->val *= pls->step;
-                if(pls->val < 0.001) pls->is_running = 0;
+                if(pls->val < 0.004) pls->is_running = 0;
             } else {
                 s->f = 0;
             }

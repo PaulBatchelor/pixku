@@ -1,0 +1,98 @@
+pix_plumber
+pix_cairo
+
+"../common/helper.rnt" eval
+
+setup
+pd pix_spigot
+
+[
+: state ptr ;
+: clk 0 ;
+: step spigot_gfx_step state spigot_step ; 
+: compute clk state spigot_compute ;
+: fd 0 ;
+: db ptr ;
+]
+
+new_state step16 dup _state setptr spigot_state
+"trig" stream step16_strig
+
+_step "spigot" sporth_func
+_compute "compute" sporth_func
+
+# open db 
+
+spigot_db "data.db" spigot_db_open _db setptr
+
+1 "cdb" db data spigot_cdb _fd set
+
+_clk "clk" sporth_var
+
+
+[
+: lvl_kick 0 ;
+: lvl_snare -6 ;
+: lvl_ride -10 ;
+: lvl_bell -6 ;
+: drumhit 
+parse
+"_trig tget dup" parse
+dup parse
+"tbldur inv 0 tphasor" parse
+"1 0 0" parse
+dup parse
+"tabread" parse
+"swap " parse
+dup parse
+"tbldur tgate *" parse
+drop 
+parse
+"get ampdb *" parse
+;
+: drumhitadd drumhit "+" parse ;
+]
+
+# bind level variables
+_lvl_kick "lvl_kick" sporth_var
+_lvl_ride "lvl_ride" sporth_var
+_lvl_bell "lvl_bell" sporth_var
+_lvl_snare "lvl_snare" sporth_var
+
+# sporth patch
+"_kick 'kick' _cdb cdbtab" parse
+"_snare 'snare1' _cdb cdbtab" parse
+"_ride 'ride2' _cdb cdbtab" parse
+"_bell 'ridebell' _cdb cdbtab" parse
+"0 130 4 clock dup _clk set _spigot fe" parse
+"1 _compute fe" parse
+"_lvl_kick" "_kick" "0" drumhit
+"_lvl_snare" "_snare" "1" drumhitadd
+"_lvl_ride" "_ride" "2" drumhitadd 
+"_lvl_bell" "_bell" "3" drumhitadd 
+
+"0.01 0.01 -30 peaklim" parse
+"4 * 0.3 clip" parse
+
+"-3 ampdb * " parse
+
+
+"draw.rnt" eval
+
+state spigot_init
+compile
+
+"notes.rnt" step16_open
+
+data plumb_prog
+"dirtydrums.wav" 10 data plumb_write
+
+# uncomment to render in realtime
+# 1 state pd spigot_audio
+# draw
+state spigot_free
+
+clean
+
+fd spigot_cdb_close
+db spigot_db_close

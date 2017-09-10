@@ -6,9 +6,11 @@ FFMPEG_OPTIONS+=-i %04d.png -c:v libx264 -c:a copy -y -strict -2
 
 FFMPEG_GIF_OPTIONS=-i palette.png -filter_complex paletteuse -r 10 -s 480x240
 
+RUNT_OTHER?=
+
 default: $(NAME).mp4
 
-$(NAME).wav: $(NAME).rnt
+$(NAME).wav: $(NAME).rnt $(RUNT_OTHER)
 	$(PIXKU) $<
 
 %.mp4: %.wav

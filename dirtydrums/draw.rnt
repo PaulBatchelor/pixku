@@ -1,0 +1,80 @@
+[
+: pulse_kick pixku_pulse ; 
+: pk_tick 2 pulse_kick ;
+
+: pulse_snare pixku_pulse ; 
+: ps_tick 2 pulse_snare ;
+
+: pulse_ride pixku_pulse ; 
+: pr_tick 2 pulse_ride ;
+
+: pulse_bell pixku_pulse ; 
+: pb_tick 2 pulse_bell ;
+
+: rms 1 ;
+: off 80 ;
+: rad 60 ;
+
+: phoenix 242 80 44 ;
+
+: yellow 255 255 0 ;
+
+: draw 
+phoenix rgbizer 1 setcolor
+bgfill
+
+80 _off set
+60 90 rms * + _rad set 
+
+yellow rgbizer 1 pulse_snare setcolor
+
+width 2 / off - 
+height 2 / off -
+rad circ fill
+
+yellow rgbizer 1 pulse_kick setcolor
+
+width 2 / off + 
+height 2 / off -
+rad circ fill
+
+yellow rgbizer 1 pulse_ride setcolor
+
+width 2 / off + 
+height 2 / off +
+rad circ fill
+
+yellow rgbizer 1 pulse_bell setcolor
+
+width 2 / off - 
+height 2 / off +
+rad circ fill
+
+writeframe
+;
+]
+
+# set up draw stuff
+
+0.8 dup 0 pulse_kick
+dup 0 pulse_snare
+dup 0 pulse_ride
+0 pulse_bell
+
+_draw "draw" sporth_func
+"30 metro _draw fe" parse
+
+_pk_tick "pk_tick" sporth_func
+"0 _trig tget _pk_tick fe" parse
+
+_ps_tick "ps_tick" sporth_func
+"1 _trig tget _ps_tick fe" parse
+
+_pr_tick "pr_tick" sporth_func
+"2 _trig tget _pr_tick fe" parse
+
+_pb_tick "pb_tick" sporth_func
+"3 _trig tget _pb_tick fe" parse
+
+_rms "rms" sporth_var
+"dup 600 butlp rms 3 * _rms set" parse

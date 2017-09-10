@@ -146,7 +146,7 @@ static runt_int rproc_circbuf(runt_vm *vm, runt_ptr p)
 
                 runt_cell_id_exec(vm, cb->fun);
                 cb->buf[pos] *= cb->step;
-                if(cb->buf[pos] < 0.001) {
+                if(cb->buf[pos] < 0.004) {
                     /* "pop" current value from stack */
                     cb->off = (cb->off + 1) % cb->max;
                     cb->size--;
