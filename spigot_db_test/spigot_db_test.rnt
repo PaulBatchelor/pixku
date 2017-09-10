@@ -33,26 +33,63 @@ spigot_db "data.db" spigot_db_open _db setptr
 
 _clk "clk" data plumb_var
 
-"_kick 'kick' _cdb cdbtab" data plumb_parse
-"8 metro dup _clk set _spigot fe" data plumb_parse
-"1 _compute fe" data plumb_parse
-"0 _trig tget dup" data plumb_parse
-"_kick tbldur inv 0 tphasor" data plumb_parse
-"1 0 0 _kick tabread" data plumb_parse
-"swap _kick tbldur tgate *" data plumb_parse
-"-6 ampdb * " data plumb_parse
+
+[
+: lvl_kick 0 ;
+: lvl_snare -6 ;
+: lvl_ride -10 ;
+: lvl_bell -6 ;
+: mkvar data plumb_var ;
+: parse data plumb_parse ;
+: drumhit 
+data plumb_parse
+"_trig tget dup" parse
+dup parse
+"tbldur inv 0 tphasor" parse
+"1 0 0" parse
+dup parse
+"tabread" parse
+"swap " parse
+dup parse
+"tbldur tgate *" parse
+drop 
+parse
+"get ampdb *" parse
+;
+]
+
+[
+: drumhitadd drumhit "+" parse ;
+]
+
+_lvl_kick "lvl_kick" mkvar
+_lvl_ride "lvl_ride" mkvar
+_lvl_bell "lvl_bell" mkvar
+_lvl_snare "lvl_snare" mkvar
+
+"_kick 'kick' _cdb cdbtab" parse
+"_snare 'snare1' _cdb cdbtab" parse
+"_ride 'ride2' _cdb cdbtab" parse
+"_bell 'ridebell' _cdb cdbtab" parse
+"0 130 4 clock dup _clk set _spigot fe" parse
+"1 _compute fe" parse
+"_lvl_kick" "_kick" "0" drumhit
+"_lvl_snare" "_snare" "1" drumhitadd
+"_lvl_ride" "_ride" "2" drumhitadd 
+"_lvl_bell" "_bell" "3" drumhitadd 
+
+"0.01 0.01 -30 peaklim" parse
+"4 * 0.3 clip" parse
+
+"-6 ampdb * " parse
 
 
 state spigot_init
 data plumb_compile
 
-0 step16_row
-0 step16_on
-4 step16_on
-8 step16_on
-12 step16_on
-14 step16_on
+"notes.rnt" step16_open
 
+data plumb_prog
 "spigot_db_test.wav" 10 data plumb_write
 
 # uncomment to render in realtime
