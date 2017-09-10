@@ -1,9 +1,10 @@
-PIXKU=../pixku
+PIXKU ?=../pixku
+NAME ?= default
 
 FFMPEG_OPTIONS=-i tmp.ogg -framerate 30 
 FFMPEG_OPTIONS+=-i %04d.png -c:v libx264 -c:a copy -y -strict -2
 
-NAME=pulse
+FFMPEG_GIF_OPTIONS=-i palette.png -filter_complex paletteuse -r 10 -s 480x240
 
 default: $(NAME).mp4
 
@@ -15,6 +16,10 @@ $(NAME).wav: $(NAME).rnt
 	oggenc tmp.wav
 	ffmpeg  $(FFMPEG_OPTIONS) $@
 	rm tmp.wav tmp.ogg
+
+%.gif: %.mp4
+	ffmpeg -y -i $< -vf palettegen palette.png
+	ffmpeg -y -i $< $(FFMPEG_GIF_OPTIONS) $@
 
 clean:
 	rm -rf $(NAME).wav

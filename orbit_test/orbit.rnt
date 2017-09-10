@@ -1,7 +1,7 @@
 pix_plumber
 pix_cairo
 
-"helper.rnt" eval
+"../common/helper.rnt" eval
 
 setup
 
@@ -28,7 +28,7 @@ frame inc _frame set
 
 _scale "scale" sporth_var
 "0.13 1 sine 0 1 biscale _scale set" parse
-"_scale get 48 60 scale mtof 0.3 sine " parse
+"_scale get 48 60 scale mtof 0.3 1 1 1 fm " parse
 
 _draw "draw" sporth_func
 "30 metro _draw fe" parse
