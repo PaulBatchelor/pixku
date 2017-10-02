@@ -4,8 +4,7 @@ echo "Usage: sh run.sh [install|clean]"
 exit
 fi
 
-RUNT_LIBS=(
-cray 
+RUNT_LIBS=(cray 
 runt-cairo 
 runt-img 
 runt-plumber
