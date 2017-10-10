@@ -4,16 +4,16 @@ echo "Usage: sh run.sh [install|clean]"
 exit
 fi
 
-RUNT_LIBS=(cray 
+RUNT_LIBS="cray 
 runt-cairo 
 runt-img 
 runt-plumber
-runt-scheme)
+runt-scheme"
 
 install()
 {
 
-for val in ${RUNT_LIBS[@]}
+for val in $RUNT_LIBS
 do
     cd $val
     make 
