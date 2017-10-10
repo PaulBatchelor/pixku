@@ -13,3 +13,6 @@
 [submodule "_libs/runt-scheme"]
 	path = _libs/runt-scheme
 	url = git://www.github.com/paulbatchelor/runt-scheme
+[submodule "_libs/patchwerk"]
+	path = _libs/patchwerk
+	url = git://github.com/paulbatchelor/patchwerk
