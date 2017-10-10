@@ -13,13 +13,18 @@ patchwerk
 : pd ptr ;
 : stream ptr ;
 : data stream pd ;
+: freq 2 ; 
 ]
 
 44100 plumb_new _pd setptr 
 pd plumbstream_new _stream setptr
 
-# 5 alloc_nodes
+# instead of alloc_nodes call this. 
+# this will set up a named function called "pw" 
+# also will initialize 5 nodes
 5 "pw" data sporth
+
+# Patchwerk stuff
 
 lfo_freq 0 ugen
 biscale_freq 1 ugen
@@ -33,7 +38,9 @@ biscale_freq 3 sine 0 connect
 lfo_amp 2 biscale_amp 0 connect
 biscale_amp 3 sine 1 connect
 
-4 lfo_freq 0 constant
+# use connect var to connect the poitner value of _freq to control 
+# frequency of lfo
+_freq lfo_freq 0 connect_var
 1 lfo_freq 1 constant
 
 50 lfo_amp 0 constant
@@ -47,15 +54,24 @@ biscale_amp 3 sine 1 connect
 
 sine 2 set_output
 
+# bind runt variable freq to sporth variable called "freq"
+_freq "freq" data plumb_var
+
+# Manipulate patchwerk LFO frequency from Sporth
+# "1 10 2 randi _freq set" data plumb_parse
+
+# call patchwerk
 "_pw fe" data plumb_parse
 
-# Runs twice as slow
+# Similar patch in Sporth runs twice as slow! 
 #"4 1 sine 100 800 biscale 50 1 sine -0.8 0.8 biscale sine" data plumb_parse
 
 data plumb_compile
 
-"test.wav" 40 data plumb_write
+"patchwerk_test.wav" 40 data plumb_write
 
 
 data plumbstream_free
 pd plumb_free
+
+# no need to clean patchwerk, plumber ugen does this for you!
