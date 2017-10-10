@@ -1,4 +1,4 @@
 PIXKU=../pixku
 
-test.wav: test.rnt
+default: test.rnt
 	$(PIXKU) $< 	

@@ -27,8 +27,6 @@ lfo_amp 0 ugen
 biscale_amp 1 ugen
 sine 0 ugen
 
-setup_nodes
-
 lfo_freq 2 biscale_freq 0 connect 
 biscale_freq 3 sine 0 connect 
 
@@ -49,13 +47,15 @@ biscale_amp 3 sine 1 connect
 
 sine 2 set_output
 
-"440 0.5 sine" data plumb_parse
+"_pw fe" data plumb_parse
+
+# Runs twice as slow
+#"4 1 sine 100 800 biscale 50 1 sine -0.8 0.8 biscale sine" data plumb_parse
+
 data plumb_compile
 
-"test.wav" 10 data plumb_write
+"test.wav" 40 data plumb_write
 
-
-patch_cleanup
 
 data plumbstream_free
 pd plumb_free
