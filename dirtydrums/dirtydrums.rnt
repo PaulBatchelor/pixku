@@ -86,7 +86,7 @@ compile
 "notes.rnt" step16_open
 
 data plumb_prog
-"dirtydrums.wav" 3 data plumb_write
+"dirtydrums.wav" 20 data plumb_write
 
 # uncomment to render in realtime
 # 1 state pd spigot_audio

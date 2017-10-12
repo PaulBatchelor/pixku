@@ -9,7 +9,8 @@ RUNT_LIBS="cray
 runt-cairo 
 runt-img 
 runt-plumber
-runt-scheme"
+runt-scheme
+runt-math"
 
 install_patchwerk()
 {

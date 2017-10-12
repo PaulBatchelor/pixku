@@ -6,6 +6,7 @@ LDFLAGS += -lrunt_cairo -lcairo
 LDFLAGS += -lrunt_plumber
 LDFLAGS += -lrunt_scheme
 LDFLAGS += -lrunt_patchwerk
+LDFLAGS += -lrunt_math
 LDFLAGS += -lspigot -lglfw -lsqlite3
 LDFLAGS += -lstdc++
 

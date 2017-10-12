@@ -16,3 +16,6 @@
 [submodule "_libs/patchwerk"]
 	path = _libs/patchwerk
 	url = git://github.com/paulbatchelor/patchwerk
+[submodule "_libs/runt-math"]
+	path = _libs/runt-math
+	url = git://github.com/paulbatchelor/runt-math

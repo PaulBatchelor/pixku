@@ -16,6 +16,7 @@ runt_int runt_load_cairo(runt_vm *vm);
 runt_int runt_load_plumber(runt_vm *vm);
 runt_int runt_load_scheme(runt_vm *vm);
 runt_int runt_load_patchwerk(runt_vm *vm);
+runt_int runt_load_math(runt_vm *vm);
 
 static void bgcolor(cray_scene *scene, cray_ray *ray, int x, int y, CRAYFLT *color)
 {
@@ -231,6 +232,13 @@ static int rproc_loadpatchwerk(runt_vm *vm, runt_ptr p)
     return runt_is_alive(vm);
 }
 
+static int rproc_loadmath(runt_vm *vm, runt_ptr p)
+{
+    runt_load_math(vm);
+    runt_mark_set(vm);
+    return runt_is_alive(vm);
+}
+
 static int rproc_loadcray(runt_vm *vm, runt_ptr p)
 {
     runt_load_cray(vm);
@@ -357,6 +365,7 @@ int pixku_runt_loader(runt_vm *vm)
     runt_word_define(vm, "pix_rnd", 7, rproc_rnd);
     runt_word_define(vm, "pix_spigot", 10, rproc_loadspigot);
     runt_word_define(vm, "pix_patchwerk", 13, rproc_loadpatchwerk);
+    runt_word_define(vm, "pix_math", 8, rproc_loadmath);
     pixku_circbuf(vm);
     pixku_pulse(vm);
     pixku_orbit(vm);
