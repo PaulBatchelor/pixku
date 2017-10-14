@@ -1,15 +1,7 @@
 pix_patchwerk
 pix_plumber
-patchwerk
+patchwerk nodes
 [
-: lfo_freq 0 ;
-: biscale_freq 1 ;
-: lfo_amp 2 ;
-: biscale_amp 3 ;
-: sine 4 ;
-
-# plumber stuff
-
 : pd ptr ;
 : stream ptr ;
 : data stream pd ;
@@ -21,38 +13,11 @@ pd plumbstream_new _stream setptr
 
 # instead of alloc_nodes call this. 
 # this will set up a named function called "pw" 
-# also will initialize 5 nodes
-5 "pw" data sporth
+# also will initialize 3 nodes
+3 "pw" data sporth
 
-# Patchwerk stuff
-
-lfo_freq 0 ugen
-biscale_freq 1 ugen
-lfo_amp 0 ugen
-biscale_amp 1 ugen
-sine 0 ugen
-
-lfo_freq 2 biscale_freq 0 connect 
-biscale_freq 3 sine 0 connect 
-
-lfo_amp 2 biscale_amp 0 connect
-biscale_amp 3 sine 1 connect
-
-# use connect var to connect the poitner value of _freq to control 
-# frequency of lfo
-_freq lfo_freq 0 connect_var
-1 lfo_freq 1 constant
-
-50 lfo_amp 0 constant
-1 lfo_amp 1 constant
-
-100 biscale_freq 1 constant
-800 biscale_freq 2 constant
-
--0.8 biscale_amp 1 constant
-0.8 biscale_amp 2 constant
-
-sine 2 set_output
+# create patchwerk patch... very similar to sporth
+3 1 sine 100 500 biscale 0.5 sine out
 
 # bind runt variable freq to sporth variable called "freq"
 _freq "freq" data plumb_var
@@ -63,13 +28,9 @@ _freq "freq" data plumb_var
 # call patchwerk
 "_pw fe" data plumb_parse
 
-# Similar patch in Sporth runs twice as slow! 
-#"4 1 sine 100 800 biscale 50 1 sine -0.8 0.8 biscale sine" data plumb_parse
-
 data plumb_compile
 
-"patchwerk_test.wav" 40 data plumb_write
-
+"patchwerk_test.wav" 10 data plumb_write
 
 data plumbstream_free
 pd plumb_free

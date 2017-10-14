@@ -15,6 +15,7 @@ runt-math"
 install_patchwerk()
 {
     cd patchwerk
+    git pull origin master
     make patchwerk.c
     cd runt 
     make
@@ -28,6 +29,7 @@ install()
 for val in $RUNT_LIBS
 do
     cd $val
+    git pull origin master
     make 
     make install
     cd -
