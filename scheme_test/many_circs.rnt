@@ -4,7 +4,6 @@ pix_cairo
 [
 : cr ptr ;
 : surface ptr ;
-: scm ptr ;
 
 : color cr cairo_set_source_rgb ;
 
@@ -20,15 +19,13 @@ fill
 ]
 
 
-scm_new _scm setptr
-
 300 300 cairo_image_surface_create _surface setptr
 
 surface cairo_create _cr setptr
 
 0 0 0 cr cairo_set_source_rgb  cr cairo_paint
 
-"circs.scm" scm scm_load
+"circs.scm" scm_load
 
 # On average, this runt routine is 1/3 faster than scheme implementation
 # The scheme makes a few more redundant pushes/pops for the rnd function. 
@@ -37,5 +34,3 @@ surface cairo_create _cr setptr
 "circs.png" surface cairo_surface_write_to_png
 
 surface cr cairo_free
-
-scm scm_free
