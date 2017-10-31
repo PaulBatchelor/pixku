@@ -20,9 +20,25 @@ install_patchwerk()
     cd runt 
     make
     make install
+    if [ $? != 0 ] ; then 
+        exit 1 
+    fi 
     cd ../../
 }
 
+install_libline()
+{
+    cd libline
+    git pull origin master
+    make  
+    cd runt 
+    make
+    make install
+    if [ $? != 0 ] ; then 
+        exit 1 
+    fi 
+    cd ../../
+}
 
 install()
 {
@@ -32,9 +48,13 @@ do
     git pull origin master
     make 
     make install
+    if [ $? != 0 ] ; then 
+        exit 1 
+    fi 
     cd -
-done
+done 
 install_patchwerk
+install_libline
 }
 
 clean_patchwerk()

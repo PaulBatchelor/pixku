@@ -19,3 +19,6 @@
 [submodule "_libs/runt-math"]
 	path = _libs/runt-math
 	url = git://github.com/paulbatchelor/runt-math
+[submodule "_libs/libline"]
+	path = _libs/libline
+	url = git://github.com/paulbatchelor/libline

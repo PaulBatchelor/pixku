@@ -2,11 +2,14 @@ OBJ=pixku.o ugen.o main.o circbuf.o pulse.o orbit.o
 
 CFLAGS=-I$(HOME)/.runt/include -fPIC -Wall -ansi -g
 LDFLAGS= -L$(HOME)/.runt/lib/ -lrunt -ldl -lrunt_img -lGL -lrunt_cray -lm
+
 LDFLAGS += -lrunt_cairo -lcairo
 LDFLAGS += -lrunt_plumber
 LDFLAGS += -lrunt_scheme
 LDFLAGS += -lrunt_patchwerk
 LDFLAGS += -lrunt_math
+LDFLAGS += -lrunt_ll
+
 LDFLAGS += -lspigot -lglfw -lsqlite3
 LDFLAGS += -lstdc++
 
