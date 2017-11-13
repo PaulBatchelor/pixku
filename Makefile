@@ -1,7 +1,9 @@
+.PHONY: osx linux
+
 OBJ=pixku.o ugen.o main.o circbuf.o pulse.o orbit.o
 
-CFLAGS=-I$(HOME)/.runt/include -fPIC -Wall -ansi -g
-LDFLAGS= -L$(HOME)/.runt/lib/ -lrunt -ldl -lrunt_img -lGL -lrunt_cray -lm
+CFLAGS=-I$(HOME)/.runt/include -fPIC -Wall -g
+LDFLAGS= -L$(HOME)/.runt/lib/ -lrunt -ldl -lrunt_img -lrunt_cray -lm
 
 LDFLAGS += -lrunt_cairo -lcairo
 LDFLAGS += -lrunt_plumber
@@ -13,14 +15,18 @@ LDFLAGS += -lrunt_ll
 LDFLAGS += -lspigot -lglfw -lsqlite3
 LDFLAGS += -lstdc++
 
-LDFLAGS +=-lsporth -lsoundpipe -lm -ljack -ldl -lpthread -lsndfile
+LDFLAGS +=-lsporth -lsoundpipe -lm -ldl -lpthread -lsndfile
 
-default: all
+default: ; @echo "Usage: make [linux|osx]"
+
+osx: ; make -f Makefile -f Makefile.osx all
+
+linux: ; make -f Makefile -f Makefile.linux all
 
 all: pixku 
 
 %.o: %.c
-	$(CC) $(CFLAGS) $< -c -o $@
+	$(CC) -ansi $(CFLAGS) $< -c -o $@
 
 pixku: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LDFLAGS)
