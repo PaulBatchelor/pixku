@@ -14,7 +14,7 @@ $(NAME).wav: $(NAME).rnt
 	sox $< -c 2 tmp.wav
 	oggenc tmp.wav
 	ffmpeg  $(FFMPEG_OPTIONS) $@
-	rm tmp.wav tmp.ogg
+	rm -f tmp.wav tmp.ogg
 
 clean:
 	rm -rf $(NAME).wav
